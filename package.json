@@ -1,0 +1,49 @@
+{
+  "name": "demoblaze-automation-tests",
+  "version": "1.0.0",
+  "description": "E-commerce checkout flow automation tests using Playwright with TypeScript and BDD",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run test:bdd && npm run test:api",
+    "test:e2e": "npm run test:bdd",
+    "test:bdd": "cucumber-js --require-module ts-node/register --require step-definitions/checkout-steps.ts --format json:test-results/cucumber-report.json --format progress-bar --format summary features/**/*.feature && node scripts/generate-cucumber-report.js",
+    "test:bdd:chromium": "cross-env BROWSER=chromium npm run test:bdd",
+    "test:bdd:firefox": "cross-env BROWSER=firefox npm run test:bdd",
+    "test:bdd:webkit": "cross-env BROWSER=webkit npm run test:bdd",
+    "test:bdd:headed": "cross-env HEADLESS=false npm run test:bdd",
+    "test:api": "playwright test tests/api-interception.spec.ts",
+    "test:api:chromium": "playwright test tests/api-interception.spec.ts --project=chromium",
+    "test:api:firefox": "playwright test tests/api-interception.spec.ts --project=firefox",
+    "test:api:webkit": "playwright test tests/api-interception.spec.ts --project=webkit",
+    "test:api:all-browsers": "playwright test tests/api-interception.spec.ts --project=chromium --project=firefox --project=webkit",
+    "test:api:headed": "playwright test tests/api-interception.spec.ts --headed",
+    "test:api:ui": "playwright test tests/api-interception.spec.ts --ui",
+    "test:api:debug": "playwright test tests/api-interception.spec.ts --debug",
+    "test:report": "playwright show-report",
+    "test:report:open": "node scripts/open-reports.js",
+    "test:report:all": "npm run test:report:open",
+    "test:report:playwright": "playwright show-report",
+    "test:report:cucumber": "node -e \"const {exec} = require('child_process'); const path = require('path'); const fs = require('fs'); const reportPath = path.join(__dirname, 'test-results', 'cucumber-report.html'); if (fs.existsSync(reportPath)) { const cmd = process.platform === 'win32' ? 'start' : process.platform === 'darwin' ? 'open' : 'xdg-open'; exec(`${cmd} \\\"${reportPath}\\\"`); } else { console.log('Cucumber report not found. Run: npm run test:bdd'); }\""
+  },
+  "keywords": [
+    "playwright",
+    "typescript",
+    "bdd",
+    "cucumber",
+    "e2e",
+    "automation"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@cucumber/cucumber": "^10.0.0",
+    "@playwright/test": "^1.40.0",
+    "@types/node": "^20.10.0",
+    "cucumber-html-reporter": "^7.2.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "axios": "^1.6.2"
+  }
+}

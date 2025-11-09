@@ -1,0 +1,7 @@
+{
+  "features": ["features/**/*.feature"],
+  "glue": ["step-definitions"],
+  "format": ["progress-bar", "summary"]
+}
+
+
